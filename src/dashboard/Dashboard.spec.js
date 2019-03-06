@@ -14,6 +14,6 @@ it('Should change the text of the button close gate when clicked on to open gate
 
     fireEvent.click(closeButton);
 
-    expect(closeButton).toHaveTextContent('Open Gate');
+    expect(queryByText(/open gate/i)).toBeTruthy();
           
 });
