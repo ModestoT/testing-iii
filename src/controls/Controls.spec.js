@@ -27,4 +27,31 @@ describe('<Controls />', () => {
 
         expect(onClick).toHaveBeenCalled();
     });
+
+    it('Should change the text of the button close gate button when clicked on to open gate', () => {
+        const onClick = jest.fn();
+        const { getByText, queryByText,rerender } = render(<Controls toggleClosed={onClick}/>);
+
+        const closeButton = getByText(/close gate/i);
+        expect(queryByText(/open gate/i)).toBeFalsy();
+
+        fireEvent.click(closeButton);
+        rerender(<Controls closed={true}/>);
+        
+        expect(queryByText(/open gate/i)).toBeTruthy();        
+    });
+
+    it('lock button should be disabled if the gate is open', () => {
+        const { getByText } = render(<Controls />);
+
+        const lockButton = getByText(/lock gate/i);
+
+        expect(lockButton).toHaveAttribute('disabled');
+    });
+
+    it('open gate should be disabled if the gate is locked', () => {
+        const { getByText} = render(<Controls closed={true} locked={true}/>);
+
+        expect(getByText(/open gate/i)).toHaveAttribute('disabled');
+    })
 })
