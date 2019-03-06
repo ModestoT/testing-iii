@@ -5,6 +5,7 @@ import 'react-testing-library/cleanup-after-each';
 import 'jest-dom/extend-expect';
 
 import Display from './Display';
+import { get } from 'https';
 
 
 describe('<Display />', () => {
@@ -39,4 +40,15 @@ describe('<Display />', () => {
         const locked = getByText(/locked/i);
         expect(locked).toHaveClass('red-led');
     });
+
+    it('should have the class name green-led if it is unlocked or open', () => {
+        const { getByText } = render(<Display />);
+
+        const unlocked = getByText(/unlocked/i);
+        expect(unlocked).toHaveClass('green-led');
+
+        const open = getByText(/open/i);
+
+        expect(open).toHaveClass('green-led');
+    })
 });
